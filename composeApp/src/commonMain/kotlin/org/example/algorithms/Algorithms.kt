@@ -8,7 +8,9 @@ import kotlinx.coroutines.launch
 
 class Algorithms {
     //compares 2 side by side and swaps them if they are out of order
+    //can be optimized if the array is already sorted (to add)
     fun bubbleSort() {
+        if (isSorting) return
         CoroutineScope(Dispatchers.Main).launch {
             isSorting = true
             for (i in array.size - 1 downTo 0) {
@@ -30,6 +32,7 @@ class Algorithms {
 
     //gets the smallest value and places it at the start
     fun selectionSort(){
+        if (isSorting) return
         CoroutineScope(Dispatchers.Main).launch {
             isSorting = true
             for (i in array.indices) {
@@ -57,6 +60,7 @@ class Algorithms {
 
     //keeps one side of the array sorted and inserts the current element into the correct position
     fun insertionSort() {
+        if (isSorting) return
         CoroutineScope(Dispatchers.Main).launch {
             isSorting = true
             for (i in 1 until array.size) {
