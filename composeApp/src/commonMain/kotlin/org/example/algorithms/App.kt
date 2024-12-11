@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -15,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -24,6 +22,9 @@ var array by mutableStateOf(intArrayOf())
 var isSorting by mutableStateOf(false)
 var timer by mutableStateOf(0f)
 var arraySize = 50
+var selectedIndex1 by mutableStateOf(-1)
+var selectedIndex2 by mutableStateOf(-1)
+
 @Composable
 @Preview
 fun App() {
@@ -41,27 +42,27 @@ fun App() {
 
     //the display
     Column {
-        Box(Modifier.offset(0.dp, 12.dp)) {
+        Box(Modifier.offset(0.dp, 20.dp)) {
             Row {
                 for (i in array.indices) {
                     Spacer(Modifier.width(4.dp))
                     Box(
                         Modifier
                             .height(array[i].dp)
-                            .background(if (isSorting) Color.Red else Color.Green)
+                            .background(if (i == selectedIndex1 || i == selectedIndex2) Color.Yellow else if (isSorting) Color.Red else Color.Green)
                             .align(Alignment.Bottom)
                     ) {
                         Text(
                             text = array[i].toString(),
-                            color = if (isSorting) Color.Red else Color.Green,
-                            fontSize = 10.sp,
-                            modifier = Modifier.offset(0.dp, -12.dp)
+                            color = if (i == selectedIndex1 || i == selectedIndex2) Color.Yellow else if (isSorting) Color.Red else Color.Green,
+                            modifier = Modifier.offset(0.dp, -20.dp)
                         )
                     }
                 }
             }
         }
-        Text(timer.toString(), Modifier.offset(0.dp, 12.dp))
+        Text(timer.toString(), Modifier.offset(0.dp, 20.dp))
+        Text("Selected Index 1: $selectedIndex1 \nSelected Index 2: $selectedIndex2", Modifier.offset(0.dp, 20.dp))
     }
 
     //timer
