@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
+import androidx.compose.material.Slider
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -30,6 +31,7 @@ var arraySize by mutableStateOf(50)
 var selectedIndex1 by mutableStateOf(-1)
 var selectedIndex2 by mutableStateOf(-1)
 var filling by mutableStateOf(false)
+var delayTime by mutableStateOf(1L)
 
 @Composable
 @Preview
@@ -58,8 +60,9 @@ fun App() {
         Text(timer.toString(), Modifier.offset(0.dp, 20.dp))
         Text("Selected Index 1: $selectedIndex1 \nSelected Index 2: $selectedIndex2", Modifier.offset(0.dp, 20.dp))
     }
-    Box (Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Column {
+    //settings
+    Box (Modifier.fillMaxSize(), Alignment.BottomCenter) {
+        Column (horizontalAlignment = Alignment.CenterHorizontally) {
             Row {
                 Button(onClick = { algorithms.bubbleSort(); timer = 0f }) {
                     Text("Bubble Sort")
@@ -82,10 +85,14 @@ fun App() {
                     Text("Increasing")
                 }
             }
+            Text("delay: $delayTime ms")
+            Slider(delayTime.toFloat(),{ delayTime = it.toLong() }, valueRange = 0f..1000f)
+            Text("size: $arraySize")
+            Slider(arraySize.toFloat(),{ arraySize = it.toInt() }, valueRange = 0f..200f)
         }
     }
 
-    //timer
+    //timer, System.nanoTime() didn't work and Clock didn't work either
     LaunchedEffect (isSorting){
         while (isSorting) {
             timer += 0.02f
@@ -102,7 +109,7 @@ fun loadArray(size: Int = 100, type: Int = 0) {
     CoroutineScope(Dispatchers.Default).launch {
         for (i in 0 until arraySize) {
             when (type) {
-                0 -> array += (0..100).random()
+                0 -> array += (0..arraySize).random()
                 1 -> array += arraySize - i
                 2 -> array += i
             }
