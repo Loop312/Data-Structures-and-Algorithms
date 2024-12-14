@@ -13,8 +13,8 @@ class Algorithms {
         if (isSorting) return
         CoroutineScope(Dispatchers.Main).launch {
             isSorting = true
-            var swap = false
             for (i in array.size - 1 downTo 0) {
+                var swap = false
                 delay(delayTime)
                 for (j in 0 until i) {
                     selectedIndex1 = j
@@ -25,7 +25,6 @@ class Algorithms {
                         array[j + 1] = temp
                         swap = true
                     }
-                    else swap = false
                 }
                 if (!swap) break
             }

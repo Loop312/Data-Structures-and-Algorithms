@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +52,7 @@ fun App() {
                         Text(
                             text = array[i].toString(),
                             color = if (i == selectedIndex1 || i == selectedIndex2) Color.Yellow else if (isSorting) Color.Red else Color.Green,
+                            overflow = TextOverflow.Visible,
                             modifier = Modifier.offset(0.dp, -20.dp)
                         )
                     }
